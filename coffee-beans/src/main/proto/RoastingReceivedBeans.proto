@@ -1,0 +1,26 @@
+syntax = "proto3";
+package  com.example;
+
+option java_multiple_files = true; // указываем! не укажем эту опцию, тогда у нас будет создан один файл этим
+// компилятором и что будет не очень удобно
+option java_package = "com.example.grpccommon"; // по этому пакету будут находиться сгенерированные файлы
+
+
+// Определение сообщения для запроса
+message MyRequest {
+  string id_arrival_coffee_beans = 1;
+  string variety = 2;
+  int64 quantity_bag = 3;
+  string country_of_origin = 4;
+  float output_weight = 5;
+  string roasting_team_id = 6;
+}
+
+// Определение сообщения для ответа
+message MyResponse {
+  string messageResponse = 1;
+}
+
+service MyService {
+  rpc getData(MyRequest) returns (MyResponse) ;
+}
