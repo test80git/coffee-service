@@ -1,0 +1,37 @@
+Существует класс MessageProcessor который обеспечивает сохрание и отправку сообщений Message.
+Кдасс MessageProcessor содержит методы для определения сообщений isSms и isEmail. А так же метода для отправки sendSms и sendEmail
+Методы isSms, isEmail, sendSms, sendEmail реализовывать не нужно
+
+Заказчик хочет поддержать новые разные способы отправки: Telegram, VK, Viber, Watsapp, Голубиная Почта
+Как нужно изменить код процессора и что бы можно было бы добавлять новые способы отправки при этом не меня код внутри process?
+
+
+
+//
+record Message(String address, Map<String, Object> payload) {}
+
+@KafkaListener(topics = "${message-topic}")
+public void listen(@Payload Message messageRecord) {
+ messgeProcessor.process(messageRecord.getValue()
+}
+
+@AllArgsConstructor
+public class MessageProcessor {
+    private final Session smppSession;
+    private final Session smtpSession;
+    private final MessageDao messageDao;
+
+    public void process(Message message) {
+        saveMessage(message);
+        if (isSms(message)) {
+            sendSms(message);
+        } else if (isEmail(message)) {
+            sendEmail(message);
+        }
+    }
+    private boolean isSms(Message message) { /**realisation ommited*/}
+    private boolean isEmail(Message message) { /**realisation ommited*/}
+    private void sendSms(Message message) { /**realisation ommited*/}
+    private void sendEmail(Message message) { /**realisation ommited*/}
+    private void saveMessage(Message message) { /**realisation ommited*/}
+}

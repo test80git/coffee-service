@@ -1,6 +1,7 @@
 package com.example.producerkafkatest.config;
 
 import com.example.core.CoffeeBeansEvent;
+import com.example.core.messageSMS.MessageEvent;
 import org.apache.kafka.clients.admin.NewTopic;
 import org.apache.kafka.clients.producer.ProducerConfig;
 import org.springframework.beans.factory.annotation.Value;
@@ -61,8 +62,28 @@ public class KafkaConfig {
     }
 
     @Bean
+    ProducerFactory<String, MessageEvent> messageFactory() {
+        return new DefaultKafkaProducerFactory<>(producerConfig());
+    }
+
+
+    @Bean
+    KafkaTemplate<String, MessageEvent> kafkaMsgTemplate() {
+        return new KafkaTemplate<>(messageFactory());
+    }
+
+    @Bean
     NewTopic createTopic() {
         return TopicBuilder.name("beans-topic")
+                .partitions(3)
+                .replicas(3)
+                .configs(Map.of("min.insync.replicas", "1"))
+                .build();
+    }
+
+    @Bean
+    NewTopic createMessageTopic() {
+        return TopicBuilder.name("message-topic")
                 .partitions(3)
                 .replicas(3)
                 .configs(Map.of("min.insync.replicas", "1"))

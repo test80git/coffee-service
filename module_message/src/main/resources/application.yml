@@ -1,0 +1,16 @@
+info:
+  app:
+    name: Message Service
+    description: Message
+  team:
+    name: MyTeam
+---
+## Spring Settings
+spring:
+  profiles:
+    active: ${SPRING_PROFILES_ACTIVE:local}
+  application:
+    name: module_message
+    datasource:
+      hikari:
+        maximum-pool-size: 10
