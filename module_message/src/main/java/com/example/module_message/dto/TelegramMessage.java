@@ -13,16 +13,14 @@ import java.time.OffsetDateTime;
 @Builder(toBuilder = true)
 @Data
 @Component
-public class EmailMessageImpl implements Message {
+public class TelegramMessage implements Message {
     private String address;
 
-    private String subject;
-    private String body;
-
+    private String content;
     private OffsetDateTime timestamp;
 
     @Override
     public String getType() {
-        return "Email";
+        return "Telegram";
     }
 }

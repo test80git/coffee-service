@@ -1,10 +1,10 @@
-package com.example.module_message.service.kafka;
+package com.example.module_message.listener.kafka;
 
 
 import com.example.core.messageSMS.MessageEvent;
 import com.example.module_message.dto.Message;
 import com.example.module_message.mapper.MessageMapper;
-import com.example.module_message.service.kafka.util.MessageService;
+import com.example.module_message.service.MessageService;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -18,10 +18,10 @@ import org.springframework.stereotype.Component;
 @Component
 @RequiredArgsConstructor
 @KafkaListener(topics = "${spring.kafka.product.topic}", groupId = "${spring.kafka.consumer.group-id}")
-public class MessageConsumer {
+public class MessageListener {
     private final Logger LOGGER = LoggerFactory.getLogger(this.getClass());
 
-    private final MessageService messageService;
+    private final MessageService messageServiceImpl;
 
     private final MessageMapper mapper;
 
@@ -35,10 +35,10 @@ public class MessageConsumer {
         LOGGER.info("Received event myMessageId: {} ", myMessageId);
         LOGGER.info("Received event messageKey: {} ", messageKey);
 
-        Message map = mapper.mapToMessage(messageEvent);
-        LOGGER.info("map => {}", map.getType());
+        Message message = mapper.mapToMessage(messageEvent);
+        LOGGER.info("message => {}", message.getType());
 
-        messageService.processMessage(map);
+        messageServiceImpl.processMessage(message);
     }
 
 

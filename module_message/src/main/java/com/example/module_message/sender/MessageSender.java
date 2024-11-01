@@ -1,4 +1,4 @@
-package com.example.module_message.service.kafka.util;
+package com.example.module_message.sender;
 
 import com.example.module_message.dto.Message;
 

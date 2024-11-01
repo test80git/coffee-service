@@ -1,10 +1,10 @@
 package com.example.module_message.mapper;
 
 import com.example.core.messageSMS.MessageEvent;
-import com.example.module_message.dto.EmailMessageImpl;
+import com.example.module_message.dto.EmailMessage;
 import com.example.module_message.dto.Message;
-import com.example.module_message.dto.SmsMessageImpl;
-import com.example.module_message.dto.TelegramMessageImpl;
+import com.example.module_message.dto.SmsMessage;
+import com.example.module_message.dto.TelegramMessage;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.MappingConstants;
@@ -19,18 +19,18 @@ public interface MessageMapper {
     @Mapping(target = "content", source = "payload.content", qualifiedByName = "mapToString")
     @Mapping(target = "address", source = "address")
     @Mapping(target = "timestamp", expression = "java(mapToCurrentTimestamp(messageEvent.payload().get(\"timestamp\")))")
-    SmsMessageImpl toSmsMessage(MessageEvent messageEvent);
+    SmsMessage toSmsMessage(MessageEvent messageEvent);
 
     @Mapping(target = "content", source = "payload.content", qualifiedByName = "mapToString")
     @Mapping(target = "address", source = "address")
     @Mapping(target = "timestamp", expression = "java(mapToCurrentTimestamp(messageEvent.payload().get(\"timestamp\")))")
-    TelegramMessageImpl toTelegramMessage(MessageEvent messageEvent);
+    TelegramMessage toTelegramMessage(MessageEvent messageEvent);
 
     @Mapping(target = "subject", source = "payload.subject", qualifiedByName = "mapToString")
     @Mapping(target = "body", source = "payload.body", qualifiedByName = "mapToString")
     @Mapping(target = "address", source = "address")
     @Mapping(target = "timestamp", expression = "java(mapToCurrentTimestamp(messageEvent.payload().get(\"timestamp\")))")
-    EmailMessageImpl toEmailMessage(MessageEvent messageEvent);
+    EmailMessage toEmailMessage(MessageEvent messageEvent);
 
     default Message mapToMessage(MessageEvent messageEvent) {
         Map<String, Object> payload = messageEvent.payload();
@@ -38,11 +38,11 @@ public interface MessageMapper {
             // Map to EmailMessageImpl
             return toEmailMessage(messageEvent);
         } else if (payload.containsKey("content")) {
-            if (messageEvent.address().toUpperCase().startsWith("TELEGRAM"))
-            { return toTelegramMessage(messageEvent);}
-            else if (messageEvent.address().toUpperCase().startsWith("SMS"))
-            // Map to SmsMessageImpl
-            return toSmsMessage(messageEvent);
+            if (messageEvent.address().toUpperCase().startsWith("TELEGRAM")) {
+                return toTelegramMessage(messageEvent);
+            } else if (messageEvent.address().toUpperCase().startsWith("SMS"))
+                // Map to SmsMessageImpl
+                return toSmsMessage(messageEvent);
         }
         throw new IllegalArgumentException("Unknown message type in payload: " + payload);
     }
@@ -53,7 +53,7 @@ public interface MessageMapper {
     }
 
     default OffsetDateTime mapToCurrentTimestamp(Object timestamp) {
-        return timestamp instanceof OffsetDateTime ? (OffsetDateTime) timestamp : OffsetDateTime.now();
+        return timestamp instanceof String ? OffsetDateTime.parse((String) timestamp) : OffsetDateTime.now();
     }
 }
 

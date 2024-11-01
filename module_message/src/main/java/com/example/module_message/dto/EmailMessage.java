@@ -13,15 +13,15 @@ import java.time.OffsetDateTime;
 @Builder(toBuilder = true)
 @Data
 @Component
-public class SmsMessageImpl implements Message {
+public class EmailMessage implements Message {
     private String address;
 
-    private String content;
-
+    private String subject;
+    private String body;
     private OffsetDateTime timestamp;
 
     @Override
     public String getType() {
-        return "Sms";
+        return "Email";
     }
 }
