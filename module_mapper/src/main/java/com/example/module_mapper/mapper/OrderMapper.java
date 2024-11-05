@@ -1,4 +1,4 @@
-package com.example.module_mapper.dto.mapper;
+package com.example.module_mapper.mapper;
 
 import com.example.module_mapper.dto.Order;
 import com.example.module_mapper.dto.OrderDTO;

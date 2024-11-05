@@ -4,6 +4,7 @@ import com.example.module_mapper.dto.Order;
 import com.example.module_mapper.dto.OrderDTO;
 import com.example.module_mapper.dto.Product;
 import com.example.module_mapper.dto.ProductDTO;
+import com.example.module_mapper.mapper.OrderMapper;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,7 +18,7 @@ import static org.junit.jupiter.api.Assertions.*;
 class OrderMapperTest {
 
     @Autowired
-    private OrderMapperImpl orderMapper;
+    private OrderMapper orderMapper;
 
     private Product product;
     private Product product2;

@@ -4,7 +4,7 @@ import com.example.module_mapper.dto.Order;
 import com.example.module_mapper.dto.OrderDTO;
 import com.example.module_mapper.dto.Product;
 import com.example.module_mapper.dto.ProductDTO;
-import com.example.module_mapper.dto.mapper.OrderMapper;
+import com.example.module_mapper.mapper.OrderMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 

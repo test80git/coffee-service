@@ -1,0 +1,11 @@
+{
+  "type": "record",
+  "name": "Student",
+  "namespace": "com.example.avro",
+  "fields": [
+    {"name": "id", "type": "long"},
+    {"name": "name", "type": "string"},
+    {"name": "age", "type": "int"},
+    {"name": "course", "type": "string"}
+  ]
+}
